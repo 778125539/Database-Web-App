@@ -10,7 +10,7 @@
 <link  href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 <body>
-
+<h1>List of Employees</h1>
 
 <div class = "container">
 	<button type="button" class="btn btn-outline-primary" onclick ="window.location.href='Views/AddEmployee.jsp'">Add Employee</button>

@@ -7,5 +7,6 @@ import in.cezarzosin.entity.Employee;
 public interface EmployeeDAO {
 	
 	public List<Employee> get();
+	public boolean addEntry(Employee employee);
 
 }

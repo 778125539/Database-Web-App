@@ -2,9 +2,11 @@ package in.cezarzosin.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import in.cezarzosin.entity.Employee;
 import in.cezarzosin.util.DBConnectionUtil;
@@ -14,6 +16,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 	Connection connection = null;
 	Statement statement = null;
 	ResultSet resultset = null;
+	PreparedStatement preparedStatement = null;
 
 	@Override
 	public List<Employee> get() {
@@ -52,5 +55,39 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 		// add employee to list.
 
 	}
+
+	@Override
+	public boolean addEntry(Employee employee) {
+		
+		
+		try {
+
+			// create sql query
+			String query = "INSERT INTO tbl_employee(name,dob,department) VALUES('" + employee.getName() + 
+					"','"+ employee.getDateOfBirth() + "','"+ employee.getDepartment()+ "');";
+
+			// get database connection
+			connection = DBConnectionUtil.openConnection();
+
+			// create a statement
+			preparedStatement =  (PreparedStatement) connection.prepareStatement(query);
+			System.out.println(query.toString());
+
+			// execute sql query
+			preparedStatement.executeUpdate();
+			return true;
+
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		
+	}
+	
+	
+	
 
 }
