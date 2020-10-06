@@ -17,6 +17,7 @@ public class EmployeeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	EmployeeDAOImplementation employeeDAO = null;
+	RequestDispatcher dispatcher = null;
 
 	public EmployeeController() {
 		employeeDAO = new EmployeeDAOImplementation();
@@ -24,11 +25,25 @@ public class EmployeeController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Employee> listOfEmployees = employeeDAO.get();
-		request.setAttribute("listOfEmployees", listOfEmployees);
+		
+		String action  = request.getParameter("action");
+		
+		if (action == null) {
+			action = "LIST";
+		} 
+		
+		switch (action) {
+		case "LIST":
+			listEmployees(request, response);
+			break;
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Views/employee-list.jsp");
-		dispatcher.forward(request, response);
+		default:
+			listEmployees(request, response);
+
+			break;
+		}
+		
+
 
 	}
 
@@ -44,8 +59,18 @@ public class EmployeeController extends HttpServlet {
 		if (employeeDAO.addEntry(employee)) {
 			request.setAttribute("message", "Saved successfully");
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("Views/AddEmployee.jsp");
+		listEmployees(request, response);
+
+	}
+
+	public void listEmployees(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<Employee> listOfEmployees = employeeDAO.get();
+		request.setAttribute("listOfEmployees", listOfEmployees);
+
+		dispatcher = request.getRequestDispatcher("Views/employee-list.jsp");
 		dispatcher.forward(request, response);
+
 	}
 
 }

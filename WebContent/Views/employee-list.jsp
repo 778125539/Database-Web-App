@@ -13,6 +13,7 @@
 <h1>List of Employees</h1>
 
 <div class = "container">
+	<p>${message}</p>
 	<button type="button" class="btn btn-outline-primary" onclick ="window.location.href='Views/AddEmployee.jsp'">Add Employee</button>
 	<table border="1" class="table table-striped table-bordered">
 		<tr class="thead-dark">
