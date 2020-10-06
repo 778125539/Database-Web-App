@@ -33,12 +33,12 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 			statement = (Statement) connection.createStatement();
 
 			// execute sql query
-			statement.execute(query);
+			resultset = statement.executeQuery(query);
 
 			// process resultset
 			while (resultset.next()) {
+				employee = new Employee();
 				employee.setName(resultset.getString("name"));
-				employee.setAge(resultset.getInt("id"));
 				employee.setDateOfBirth(resultset.getString("dob"));
 				employee.setDepartment(resultset.getString("department"));
 				listOfEmployees.add(employee);
