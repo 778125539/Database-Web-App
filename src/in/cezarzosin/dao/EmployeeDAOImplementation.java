@@ -44,6 +44,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 				employee.setName(resultset.getString("name"));
 				employee.setDateOfBirth(resultset.getString("dob"));
 				employee.setDepartment(resultset.getString("department"));
+				employee.setId(resultset.getInt("id"));
 				listOfEmployees.add(employee);
 			}
 
@@ -58,34 +59,93 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 
 	@Override
 	public boolean addEntry(Employee employee) {
-		
-		
+
 		try {
 
 			// create sql query
-			String query = "INSERT INTO tbl_employee(name,dob,department) VALUES('" + employee.getName() + 
-					"','"+ employee.getDateOfBirth() + "','"+ employee.getDepartment()+ "');";
+			String query = "INSERT INTO tbl_employee(name,dob,department) VALUES('" + employee.getName() + "','"
+					+ employee.getDateOfBirth() + "','" + employee.getDepartment() + "');";
 
 			// get database connection
 			connection = DBConnectionUtil.openConnection();
 
 			// create a statement
-			preparedStatement =  (PreparedStatement) connection.prepareStatement(query);
+			preparedStatement = (PreparedStatement) connection.prepareStatement(query);
 			System.out.println(query.toString());
 
 			// execute sql query
 			preparedStatement.executeUpdate();
 			return true;
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 
+	}
+
+	@Override
+	public Employee getEntryByEdi(int id) {
+		Employee employee = null;
+
+		try {
+
+			// create sql query
+			String query = "SELECT * FROM tbl_employee where id=" + id + ";";
+
+			// get database connection
+			connection = DBConnectionUtil.openConnection();
+
+			// create a statement
+			statement = (Statement) connection.createStatement();
+
+			// execute sql query
+			resultset = statement.executeQuery(query);
+
+			// process resultset
+			while (resultset.next()) {
+				employee = new Employee();
+				employee.setName(resultset.getString("name"));
+				employee.setDateOfBirth(resultset.getString("dob"));
+				employee.setDepartment(resultset.getString("department"));
+				employee.setId(resultset.getInt("id"));
+			}
+			return employee;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	@Override
+	public boolean updateAnEntry(Employee employee, int id) {
+
+		try {
+
+			// create sql query
+			String query = "UPDATE tbl_employee SET name='" + employee.getName() + "', dob='" +employee.getDateOfBirth() +
+					"', department = '" + employee.getDepartment() + "' WHERE id = " + id;
+
+			// get database connection
+			connection = DBConnectionUtil.openConnection();
+
+			// create a statement
+			preparedStatement = (PreparedStatement) connection.prepareStatement(query);
+			System.out.println(query.toString());
+
+			// execute sql query
+			preparedStatement.executeUpdate();
+			return true;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
 
-		
 	}
+	
 	
 	
 	

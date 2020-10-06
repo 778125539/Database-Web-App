@@ -25,30 +25,43 @@ public class EmployeeController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String action  = request.getParameter("action");
-		
+
+		String action = request.getParameter("action");
+
 		if (action == null) {
 			action = "LIST";
-		} 
-		
+		}
+
 		switch (action) {
 		case "LIST":
+			System.out.println("List");
 			listEmployees(request, response);
 			break;
 
+		case "EDIT":
+			System.out.println("Edit");
+			editEmployees(request, response);
+			break;
+
+		case "UPDATE":
+			System.out.println("Update");
+			updateEmployee(request, response);
+			break;
+			
+
+
 		default:
+			System.out.println("Default");
 			listEmployees(request, response);
 
 			break;
 		}
-		
-
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String firstname = request.getParameter("firstname");
 		String dateOfBirth = request.getParameter("dob");
 		String department = request.getParameter("department");
@@ -62,6 +75,8 @@ public class EmployeeController extends HttpServlet {
 		listEmployees(request, response);
 
 	}
+	
+
 
 	public void listEmployees(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -70,6 +85,42 @@ public class EmployeeController extends HttpServlet {
 
 		dispatcher = request.getRequestDispatcher("Views/employee-list.jsp");
 		dispatcher.forward(request, response);
+
+	}
+
+	public void editEmployees(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String String_id = request.getParameter("id");
+		int id = Integer.parseInt(String_id);
+		Employee employee = employeeDAO.getEntryByEdi(id);
+		String nameOfEmployee = employee.getName();
+		String dateOfBirthOfEmployee = employee.getDateOfBirth();
+		String departmentOfEmployee = employee.getDepartment();
+		request.setAttribute("nameOfEmployee", nameOfEmployee);
+		request.setAttribute("dateOfBirthOfEmployee", dateOfBirthOfEmployee);
+		request.setAttribute("departmentOfEmployee", departmentOfEmployee);
+
+		dispatcher = request.getRequestDispatcher("Views/AddEmployee.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	public void updateEmployee(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String String_id = request.getParameter("id");
+		int id = Integer.parseInt(String_id);
+		String firstname = request.getParameter("firstname");
+		String dateOfBirth = request.getParameter("dob");
+		String department = request.getParameter("department");
+		Employee employee = new Employee();
+		employee.setName(firstname);
+		employee.setDateOfBirth(dateOfBirth);
+		employee.setDepartment(department);
+		employeeDAO.updateAnEntry(employee, id);
+		request.setAttribute("message", "Employee no. " + id + " updated successfully");
+		listEmployees(request, response);
 
 	}
 

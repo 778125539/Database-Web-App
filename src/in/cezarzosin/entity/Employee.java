@@ -5,6 +5,9 @@ public class Employee {
 	private String name;
 	private String department;
 	private String dateOfBirth;
+	private int id;
+	
+	
 
 
 
@@ -32,6 +35,17 @@ public class Employee {
 
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+	
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
