@@ -16,15 +16,16 @@
 
 
 	<div class="container">
-		<form action="${pageContext.request.contextPath}/EmployeeController?action=UPDATE"
+		<form action="${pageContext.request.contextPath}/EmployeeController"
 			method="POST">
 			Enter name: <input type="text" name="firstname"
-				value="${nameOfEmployee}" /> <br /> Enter date of birth: <input
-				type="date" name="dob" value="${dateOfBirthOfEmployee}" /><br />
+				value="${employee.name}" /> <br /> Enter date of birth: <input
+				type="date" name="dob" value="${employee.dateOfBirth}" /><br />
 			Enter department: <input type="text" name="department"
-				value=" ${departmentOfEmployee}" /><br />
+				value="${employee.department}" /><br />
+			
 			<button class="btn btn-outline-warning" type="submit">Save</button>
-
+			<input type = "hidden"  name ="id" value = "${employee.id}"/>
 		</form>
 
 	</div>

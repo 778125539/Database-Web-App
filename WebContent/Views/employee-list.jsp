@@ -36,7 +36,7 @@
 					<td>${employee.getDepartment()}</td>
 					<td><a
 						href="${pageContext.request.contextPath}/EmployeeController?action=EDIT&id=${employee.id}">
-							<c:set var="id" value="${employee.id} }" /> Edit
+							 Edit
 					</a></td>
 				</tr>
 			</c:forEach>

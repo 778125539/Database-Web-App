@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import in.cezarzosin.dao.EmployeeDAO;
 import in.cezarzosin.dao.EmployeeDAOImplementation;
 import in.cezarzosin.entity.Employee;
+import sun.nio.cs.ext.ISCII91;
 
 public class EmployeeController extends HttpServlet {
 
@@ -34,24 +35,14 @@ public class EmployeeController extends HttpServlet {
 
 		switch (action) {
 		case "LIST":
-			System.out.println("List");
 			listEmployees(request, response);
 			break;
 
 		case "EDIT":
-			System.out.println("Edit");
 			editEmployees(request, response);
 			break;
 
-		case "UPDATE":
-			System.out.println("Update");
-			updateEmployee(request, response);
-			break;
-			
-
-
 		default:
-			System.out.println("Default");
 			listEmployees(request, response);
 
 			break;
@@ -62,21 +53,33 @@ public class EmployeeController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String id = request.getParameter("id");
+		Employee employee = new Employee();
 		String firstname = request.getParameter("firstname");
 		String dateOfBirth = request.getParameter("dob");
 		String department = request.getParameter("department");
-		Employee employee = new Employee();
+
 		employee.setName(firstname);
 		employee.setDateOfBirth(dateOfBirth);
 		employee.setDepartment(department);
-		if (employeeDAO.addEntry(employee)) {
-			request.setAttribute("message", "Saved successfully");
+
+
+		if (id.isEmpty() || id == null) {
+			if (employeeDAO.addEntry(employee))
+				request.setAttribute("message", "Saved successfully");
 		}
+
+		else
+
+		{
+			employee.setId(Integer.parseInt(id));
+			if (employeeDAO.updateAnEntry(employee))
+				request.setAttribute("message", "Update successfully");
+		}
+
 		listEmployees(request, response);
 
 	}
-	
-
 
 	public void listEmployees(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -93,34 +96,12 @@ public class EmployeeController extends HttpServlet {
 
 		String String_id = request.getParameter("id");
 		int id = Integer.parseInt(String_id);
-		Employee employee = employeeDAO.getEntryByEdi(id);
-		String nameOfEmployee = employee.getName();
-		String dateOfBirthOfEmployee = employee.getDateOfBirth();
-		String departmentOfEmployee = employee.getDepartment();
-		request.setAttribute("nameOfEmployee", nameOfEmployee);
-		request.setAttribute("dateOfBirthOfEmployee", dateOfBirthOfEmployee);
-		request.setAttribute("departmentOfEmployee", departmentOfEmployee);
+		Employee employee = employeeDAO.getEntryById(id);
+		
 
+		request.setAttribute("employee", employee);
 		dispatcher = request.getRequestDispatcher("Views/AddEmployee.jsp");
 		dispatcher.forward(request, response);
-
-	}
-
-	public void updateEmployee(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String String_id = request.getParameter("id");
-		int id = Integer.parseInt(String_id);
-		String firstname = request.getParameter("firstname");
-		String dateOfBirth = request.getParameter("dob");
-		String department = request.getParameter("department");
-		Employee employee = new Employee();
-		employee.setName(firstname);
-		employee.setDateOfBirth(dateOfBirth);
-		employee.setDepartment(department);
-		employeeDAO.updateAnEntry(employee, id);
-		request.setAttribute("message", "Employee no. " + id + " updated successfully");
-		listEmployees(request, response);
 
 	}
 

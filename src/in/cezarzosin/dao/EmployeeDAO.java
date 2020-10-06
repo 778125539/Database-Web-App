@@ -8,7 +8,7 @@ public interface EmployeeDAO {
 	
 	public List<Employee> get();
 	public boolean addEntry(Employee employee);
-	public Employee getEntryByEdi(int id);
-	public boolean updateAnEntry(Employee employee, int id);
+	public Employee getEntryById(int id);
+	public boolean updateAnEntry(Employee employee);
 
 }

@@ -85,7 +85,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 	}
 
 	@Override
-	public Employee getEntryByEdi(int id) {
+	public Employee getEntryById(int id) {
 		Employee employee = null;
 
 		try {
@@ -120,13 +120,13 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 	}
 	
 	@Override
-	public boolean updateAnEntry(Employee employee, int id) {
+	public boolean updateAnEntry(Employee employee) {
 
 		try {
 
 			// create sql query
 			String query = "UPDATE tbl_employee SET name='" + employee.getName() + "', dob='" +employee.getDateOfBirth() +
-					"', department = '" + employee.getDepartment() + "' WHERE id = " + id;
+					"', department ='" + employee.getDepartment() + "' WHERE id = " + employee.getId() + ";";
 
 			// get database connection
 			connection = DBConnectionUtil.openConnection();
