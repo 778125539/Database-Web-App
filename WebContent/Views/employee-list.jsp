@@ -37,7 +37,13 @@
 					<td><a
 						href="${pageContext.request.contextPath}/EmployeeController?action=EDIT&id=${employee.id}">
 							 Edit
-					</a></td>
+					</a>
+					 / 
+					<a
+						href="${pageContext.request.contextPath}/EmployeeController?action=DELETE&id=${employee.id}">
+							 Delete
+					</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

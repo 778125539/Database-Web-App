@@ -10,5 +10,6 @@ public interface EmployeeDAO {
 	public boolean addEntry(Employee employee);
 	public Employee getEntryById(int id);
 	public boolean updateAnEntry(Employee employee);
+	public boolean deleteEntry (int id);
 
 }

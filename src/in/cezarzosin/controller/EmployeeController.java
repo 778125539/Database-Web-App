@@ -42,6 +42,10 @@ public class EmployeeController extends HttpServlet {
 			editEmployees(request, response);
 			break;
 
+		case "DELETE":
+			deleteEmployee(request, response);
+			break;
+
 		default:
 			listEmployees(request, response);
 
@@ -62,7 +66,6 @@ public class EmployeeController extends HttpServlet {
 		employee.setName(firstname);
 		employee.setDateOfBirth(dateOfBirth);
 		employee.setDepartment(department);
-
 
 		if (id.isEmpty() || id == null) {
 			if (employeeDAO.addEntry(employee))
@@ -97,12 +100,22 @@ public class EmployeeController extends HttpServlet {
 		String String_id = request.getParameter("id");
 		int id = Integer.parseInt(String_id);
 		Employee employee = employeeDAO.getEntryById(id);
-		
 
 		request.setAttribute("employee", employee);
 		dispatcher = request.getRequestDispatcher("Views/AddEmployee.jsp");
 		dispatcher.forward(request, response);
 
+	}
+
+	public void deleteEmployee(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String String_id = request.getParameter("id");
+		int id = Integer.parseInt(String_id);
+		if (employeeDAO.deleteEntry(id)) {
+			request.setAttribute("message", "Delete successfully");
+		}
+		listEmployees(request, response);
 	}
 
 }

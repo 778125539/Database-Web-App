@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.ParameterParser;
+
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 import in.cezarzosin.entity.Employee;
@@ -118,15 +120,16 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 		}
 
 	}
-	
+
 	@Override
 	public boolean updateAnEntry(Employee employee) {
 
 		try {
 
 			// create sql query
-			String query = "UPDATE tbl_employee SET name='" + employee.getName() + "', dob='" +employee.getDateOfBirth() +
-					"', department ='" + employee.getDepartment() + "' WHERE id = " + employee.getId() + ";";
+			String query = "UPDATE tbl_employee SET name='" + employee.getName() + "', dob='"
+					+ employee.getDateOfBirth() + "', department ='" + employee.getDepartment() + "' WHERE id = "
+					+ employee.getId() + ";";
 
 			// get database connection
 			connection = DBConnectionUtil.openConnection();
@@ -145,9 +148,23 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 		}
 
 	}
-	
-	
-	
-	
+
+	@Override
+	public boolean deleteEntry(int id) {
+
+		try {
+			String query = "DELETE FROM tbl_employee WHERE id =" + id + ";";
+			Connection connection = DBConnectionUtil.openConnection();
+			PreparedStatement preparedStatement = (PreparedStatement) connection.prepareStatement(query);
+			System.out.println(query.toString());
+			preparedStatement.executeUpdate();
+			return true;
+			
+		} catch (SQLException e) {
+			e.getStackTrace();
+			return false;
+		}
+
+	}
 
 }
