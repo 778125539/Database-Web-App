@@ -46,6 +46,10 @@ public class EmployeeController extends HttpServlet {
 			deleteEmployee(request, response);
 			break;
 
+		case "WELCOME":
+			welcome(request, response);
+			break;
+
 		default:
 			listEmployees(request, response);
 
@@ -63,6 +67,16 @@ public class EmployeeController extends HttpServlet {
 		String dateOfBirth = request.getParameter("dob");
 		String department = request.getParameter("department");
 
+		String password = request.getParameter("password");
+		
+		if ( !password.isEmpty() && password.equals("password")) {
+			System.out.println("Password Accepted - > " + password);
+			listEmployees(request, response);
+			return;
+
+		} 
+			
+		
 		employee.setName(firstname);
 		employee.setDateOfBirth(dateOfBirth);
 		employee.setDepartment(department);
@@ -103,6 +117,13 @@ public class EmployeeController extends HttpServlet {
 
 		request.setAttribute("employee", employee);
 		dispatcher = request.getRequestDispatcher("Views/AddEmployee.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
+	public void welcome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		dispatcher = request.getRequestDispatcher("Views/welcome.jsp");
 		dispatcher.forward(request, response);
 
 	}

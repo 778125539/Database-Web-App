@@ -10,6 +10,7 @@
 <link
 	href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css"
 	rel="stylesheet" />
+	<link rel = "stylesheet" type = "textcss" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
 
 <body>
 	<h1>List of Employees</h1>
