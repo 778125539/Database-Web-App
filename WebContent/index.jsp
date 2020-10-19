@@ -9,6 +9,28 @@
 
 
 <body>
+
+	<%
+
+ 	String email = (String) session.getAttribute("email");
+	
+	if (email !=null){
+		response.sendRedirect("EmployeeController?action=LIST");
+		
+	}
+	
+	String status = request.getParameter("status");
+	if (status!=null){
+		if(status.equals("false")) {
+			out.print("Bad credentials");
+		}
+		else if (status.equals("error")){
+			out.print("Some error occured");
+		}
+	}
+
+	%>
+
 	<div class="container">
 		<form action="Loginprocess" method="post">
 			<div class="card">

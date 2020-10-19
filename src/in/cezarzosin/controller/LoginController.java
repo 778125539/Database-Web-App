@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import in.cezarzosin.dao.LoginDAO;
 import in.cezarzosin.dao.LoginDAOImplementation;
@@ -21,11 +22,13 @@ public class LoginController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HttpSession session =  req.getSession();
 		Login login = new Login();
 		login.setEmail(req.getParameter("email"));
 		login.setPassword(req.getParameter("password"));
 		String status = loginDAO.authenticate(login);
 		if (status.equals("true")) {
+			session.setAttribute("email", login.getEmail());
 			resp.sendRedirect("EmployeeController?action=LIST");
 		}
 		if (status.equals("false")) {
