@@ -16,6 +16,11 @@
 
 
 	<div class="container">
+	<div class = "float-right">
+	<a href = "${pageContext.request.contextPath}/logout.jsp"> Logout </a>
+	</div>
+	
+	
 		<form action="${pageContext.request.contextPath}/EmployeeController"
 			method="POST">
 			Enter name: <input type="text" name="firstname"

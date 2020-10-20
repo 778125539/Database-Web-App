@@ -31,6 +31,7 @@ public class EmployeeController extends HttpServlet {
 
 		if (action == null) {
 			action = "LIST";
+	
 		}
 
 		switch (action) {
@@ -68,8 +69,11 @@ public class EmployeeController extends HttpServlet {
 		String department = request.getParameter("department");
 
 		String password = request.getParameter("password");
+		System.out.println("Info " + (password!=null) );
+
 		
-		if ( !password.isEmpty() && password.equals("password")) {
+		if ( (password!=null) && password.equals("password")) {
+
 			System.out.println("Password Accepted - > " + password);
 			listEmployees(request, response);
 			return;

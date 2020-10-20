@@ -14,8 +14,20 @@
 
 <body>
 	<h1>List of Employees</h1>
+	
+	<% 
+	String email = (String)session.getAttribute("email");
+	if (email == null ){
+		response.sendRedirect("index.jsp");
+	}
+	
+	%>
 
 	<div class="container">
+		<div class = "float-right">
+	<a href = "${pageContext.request.contextPath}/logout.jsp"> Logout </a>
+	</div>
+	
 		<p>${message}</p>
 		<button type="button" class="btn btn-outline-primary"
 			onclick="window.location.href='Views/AddEmployee.jsp'">Add
